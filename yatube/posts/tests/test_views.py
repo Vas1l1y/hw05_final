@@ -31,8 +31,7 @@ class PostsPagesTests(TestCase):
             b'\xFF\xFF\xFF\x21\xF9\x04\x00\x00'
             b'\x00\x00\x00\x2C\x00\x00\x00\x00'
             b'\x02\x00\x01\x00\x00\x02\x02\x0C'
-            b'\x0A\x00\x3B'
-            )
+            b'\x0A\x00\x3B')
         uploaded = SimpleUploadedFile(
             name='small.gif',
             content=small_gif,

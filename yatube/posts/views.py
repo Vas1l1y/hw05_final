@@ -137,8 +137,7 @@ def follow_index(request):
     context = {
         'page_obj': page_obj,
         'title': title,
-        'is_follow': is_follow
-        }
+        'is_follow': is_follow}
     return render(request, 'posts/follow.html', context)
 
 
