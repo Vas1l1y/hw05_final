@@ -135,10 +135,10 @@ def follow_index(request):
     title = ('Посты избранных авторов')
     is_follow = True
     context = {
-               'page_obj': page_obj,
-               'title': title,
-               'is_follow': is_follow
-               }
+        'page_obj': page_obj,
+        'title': title,
+        'is_follow': is_follow
+        }
     return render(request, 'posts/follow.html', context)
 
 
