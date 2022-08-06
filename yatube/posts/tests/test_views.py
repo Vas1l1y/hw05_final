@@ -6,7 +6,7 @@ from django.urls import reverse
 from django import forms
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.conf import settings
-from posts.models import Post, Group, Comment
+from posts.models import Post, Group
 from django.core.cache import cache
 User = get_user_model()
 
@@ -24,16 +24,14 @@ class PostsPagesTests(TestCase):
         cls.group = Group.objects.create(
             title='Заголовок',
             slug='test-slug',
-            description='Тестовое описание',
-        )
+            description='Тестовое описание')
         small_gif = (            
              b'\x47\x49\x46\x38\x39\x61\x02\x00'
              b'\x01\x00\x80\x00\x00\x00\x00\x00'
              b'\xFF\xFF\xFF\x21\xF9\x04\x00\x00'
              b'\x00\x00\x00\x2C\x00\x00\x00\x00'
              b'\x02\x00\x01\x00\x00\x02\x02\x0C'
-             b'\x0A\x00\x3B'
-        )
+             b'\x0A\x00\x3B')
         uploaded = SimpleUploadedFile(
             name='small.gif',
             content=small_gif,
@@ -74,8 +72,7 @@ class PostsPagesTests(TestCase):
             reverse('posts:post_detail',
                     kwargs={'post_id': 1}): 'posts/post_detail.html',
             reverse('posts:post_create'): 'posts/create_post.html',
-            '/crash/': 'core/404.html',
-            }
+            '/crash/': 'core/404.html'}
         for reverse_name, template in templates_pages_names.items():
             with self.subTest(reverse_name=reverse_name):
                 response = self.authorized_client.get(reverse_name)
@@ -365,7 +362,6 @@ class PostsIndexCache(TestCase):
             author=cls.user,
             text='Тестирование кэша главной страницы',
         )
-        
 
     @classmethod
     def tearDownClass(cls):
@@ -383,7 +379,6 @@ class PostsIndexCache(TestCase):
         # Авторизуем пользователя
         self.authorized_client.force_login(self.user)
 
-    
     def test_cache_for_index(self):
         """Тест проверяющий работу кэширования страницы"""
         response_first = self.authorized_client.get(
@@ -430,7 +425,6 @@ class PostsFollowAuthor(TestCase):
         self.authorized_masha.force_login(self.user_masha)
         self.authorized_vasya.force_login(self.user_vasya)
 
-
     def test_no_see_post_in_follow_index_unfollowed_user(self):
         """Новая запись пользователя не появляется в follow index тех,
         кто на него не подписан"""
@@ -445,8 +439,9 @@ class PostsFollowAuthor(TestCase):
         # Взяли +первый элемент из списка страницы follow index
         response_follow_index = self.authorized_vasya.get(
             reverse('posts:follow_index'))
-        # Сравниваем, 
-        self.assertNotEqual(response_index.content, response_follow_index.content)
+        self.assertNotEqual(
+            response_index.content,
+            response_follow_index.content)
 
     def test_see_post_in_follow_index_followed_user(self):
         """Новая запись пользователя появляется в follow index тех,
@@ -467,21 +462,21 @@ class PostsFollowAuthor(TestCase):
         response_follow_index = self.authorized_vasya.get(
             reverse('posts:follow_index'))
         # Взяли первый элемент из списка страницы follow index
-        first_object_follow_index = response_follow_index.context['page_obj'][0]
+        first_object_f_index = response_follow_index.context['page_obj'][0]
         # Получаем текст поста
-        post_text_follow_index = first_object_follow_index.text
+        post_text_follow_index = first_object_f_index.text
         # Сравниваем полученный текст с созданным постом
-        self.assertEqual(post_text_follow_index, 'Ученье — свет, а неученье — тьма')
-        # Проверяем, что содержимое страниц одинаковое    
-        self.assertEqual(first_object_index, first_object_follow_index)
+        self.assertEqual(
+            post_text_follow_index,
+            'Ученье — свет, а неученье — тьма')
+        # Проверяем, что содержимое страниц одинаковое
+        self.assertEqual(first_object_index, first_object_f_index)
         # Отписываемся от автора
         self.authorized_vasya.get('/profile/Masha/unfollow/')
         # Получаем follow index для юзера после отписки
         response_follow_index_unfollow = self.authorized_vasya.get(
             reverse('posts:follow_index'))
         # сравниваем follow до подписки на автора и после отписки
-        self.assertEqual(response_follow_index_none_post.content, response_follow_index_unfollow.content)
-
-    # def test_cannt_subscribe_to_yourself(self):
-    #     """Проверка, что нельзя подписаться на самого себя"""
-    #     self.authorized_vasya.get('/profile/Vasya/follow/')
+        self.assertEqual(
+            response_follow_index_none_post.content,
+            response_follow_index_unfollow.content)

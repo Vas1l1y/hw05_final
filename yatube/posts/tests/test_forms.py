@@ -3,7 +3,7 @@ import tempfile
 
 from django.contrib.auth import get_user_model
 from posts.models import Post, Group, Comment
-from posts.forms import PostForm, CommentForm
+from posts.forms import PostForm
 from django.conf import settings
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import Client, TestCase, override_settings
@@ -89,7 +89,6 @@ class PostCreateFormTests(TestCase):
         )
 
     def test_edit_post(self):
-
         uploaded = SimpleUploadedFile(
             name='small2.gif',
             content=self.small_gif_code,

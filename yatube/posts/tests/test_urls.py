@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 
 from django.test import TestCase, Client
 
-from ..models import Post, Group, Comment
+from ..models import Post, Group
 User = get_user_model()
 
 
@@ -23,7 +23,6 @@ class PostURLTests(TestCase):
         )
 
     def setUp(self):
-        
         # Создаем неавторизованный клиент
         self.guest_client = Client()
         # Создаем пользователя
@@ -62,20 +61,20 @@ class PostURLTests(TestCase):
         for url, client, expected_code in templates:
             with self.subTest(address=url):
                 response = client.get(url)
-                self.assertEqual(response.status_code, expected_code)                
+                self.assertEqual(response.status_code, expected_code)
 
     def test_add_comment_guest_client_redirect(self):
-        """Проверка перенаправления незарегистрированного 
+        """Проверка перенаправления незарегистрированного
         пользователя на login при попытке добавить комментарий"""
         response = self.guest_client.post('/posts/1/comment/')
         expected_url = '/auth/login/?next=/posts/1/comment/'
         self.assertRedirects(
-            response,expected_url)
+            response, expected_url)
 
     def test_add_comment_authorized_client_redirect(self):
-        """Проверка перенаправления зарегистрированного 
+        """Проверка перенаправления зарегистрированного
         пользователя на post_detail при добавлении комментарий"""
         response = self.authorized_client.post('/posts/1/comment/')
         expected_url = '/posts/1/'
         self.assertRedirects(
-            response,expected_url)
+            response, expected_url)

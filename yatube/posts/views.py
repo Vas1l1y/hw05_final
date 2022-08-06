@@ -7,6 +7,7 @@ from django.views.decorators.cache import cache_page
 
 TEN = 10
 
+
 @cache_page(timeout=20, key_prefix='index_page')
 def index(request):
     post_list = Post.objects.select_related('author', 'group')
@@ -72,6 +73,7 @@ def post_detail(request, post_id):
     }
     return render(request, 'posts/post_detail.html', context)
 
+
 @login_required
 def post_create(request):
     title = 'Новый пост'
@@ -130,13 +132,12 @@ def follow_index(request):
     paginator = Paginator(post_list, 10)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    title = f'Посты избранных авторов'
+    title = ('Посты избранных авторов')
     is_follow = True
     context = {
                'page_obj': page_obj,
                'title': title,
-               'is_follow': is_follow,
-    }
+               'is_follow': is_follow}
     return render(request, 'posts/follow.html', context)
 
 
@@ -162,4 +163,3 @@ def profile_unfollow(request, username):
     if follower.exists():
         follower.delete()
     return redirect('posts:profile', username)
- 

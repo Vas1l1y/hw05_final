@@ -47,7 +47,6 @@ class Post(models.Model):
         blank=True
     )
 
-
     class Meta:
         verbose_name = 'Пост'
         verbose_name_plural = 'Посты'
@@ -96,6 +95,7 @@ class Follow(models.Model):
         related_name='following',
         verbose_name='Автор'
     )
+
     class Meta:
         constraints = (models.UniqueConstraint(
             fields=['user', 'author'],
