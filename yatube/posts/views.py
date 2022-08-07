@@ -11,7 +11,7 @@ TEN = 10
 @cache_page(timeout=20, key_prefix='index_page')
 def index(request):
     post_list = Post.objects.select_related('author', 'group')
-    paginator = Paginator(post_list, 10)
+    paginator = Paginator(post_list, TEN)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     title = 'Последние обновления на сайте'

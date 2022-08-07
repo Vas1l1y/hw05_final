@@ -192,12 +192,12 @@ class PaginatorViewsTest(TestCase):
             slug='test-slug1',
             description='Тестовое описание'
         )
-        for i in range(13):
-            cls.post = Post.objects.create(
-                text=str(i) + '. Текст 1',
-                author=cls.user,
-                group=cls.group
-            )
+        Post.objects.bulk_create([
+            Post(author=cls.user,
+                 group = cls.group,
+                 text=f'Тестовый пост {i}')
+            for i in range(0,13)
+        ])
 
     def setUp(self):
         cache.clear()
