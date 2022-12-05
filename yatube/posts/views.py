@@ -27,7 +27,7 @@ def index(request):
 def group_posts(request, slug):
     group = get_object_or_404(Group, slug=slug)
     posts = group.posts.select_related('group')
-    paginator = Paginator(posts, 10)
+    paginator = Paginator(posts, TEN)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     title = f'Записи сообщества {group}'
@@ -44,7 +44,7 @@ def group_posts(request, slug):
 def profile(request, username):
     author = get_object_or_404(User, username=username)
     post_list = author.posts.select_related('author', 'group')
-    paginator = Paginator(post_list, 10)
+    paginator = Paginator(post_list, TEN)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     posts_count = author.posts.count
@@ -129,7 +129,7 @@ def add_comment(request, post_id):
 @login_required
 def follow_index(request):
     post_list = Post.objects.filter(author__following__user=request.user)
-    paginator = Paginator(post_list, 10)
+    paginator = Paginator(post_list, TEN)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     title = ('Посты избранных авторов')

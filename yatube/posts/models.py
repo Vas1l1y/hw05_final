@@ -19,7 +19,7 @@ class Post(models.Model):
     text = models.TextField(
         'Текст поста',
         help_text='Введите текст поста',
-        max_length=200
+        max_length=1000
     )
     pub_date = models.DateTimeField(
         'Дата публикации',
