@@ -1,5 +1,5 @@
 # Byte-compiled / optimized / DLL files
-__pycache__/
+#__pycache__/
 *.py[cod]
 *$py.class
 
@@ -43,7 +43,7 @@ htmlcov/
 .nox/
 .coverage
 .coverage.*
-.cache
+#.cache
 nosetests.xml
 coverage.xml
 *.cover
@@ -63,7 +63,7 @@ local_settings.py
 
 # Flask stuff:
 instance/
-.webassets-cache
+#.webassets-cache
 
 # Scrapy stuff:
 .scrapy
@@ -121,7 +121,7 @@ venv.bak/
 /site
 
 # mypy
-.mypy_cache/
+#.mypy_cache/
 .dmypy.json
 dmypy.json
 
@@ -143,7 +143,7 @@ dmypy.json
 # Local History for Visual Studio Code
 .history/
 
-.mypy_cache
+#.mypy_cache
 
 
 htmlcov/
