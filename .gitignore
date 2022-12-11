@@ -49,7 +49,7 @@ coverage.xml
 *.cover
 *.py,cover
 .hypothesis/
-#.pytest_cache/
+.pytest_cache/
 
 # Translations
 *.mo
@@ -58,12 +58,12 @@ coverage.xml
 # Django stuff:
 *.log
 local_settings.py
-#db.sqlite3
-#db.sqlite3-journal
+db.sqlite3
+db.sqlite3-journal
 
 # Flask stuff:
 instance/
-#.webassets-cache
+.webassets-cache
 
 # Scrapy stuff:
 .scrapy
@@ -145,11 +145,8 @@ dmypy.json
 
 .mypy_cache
 
+# папки со статикой и медиа
+static/
+yatube/posts/static/
+yatube/media/
 
-htmlcov/
-.coverage
-.coverage.*
-coverage.xml
-*.cover
-
-#media/
